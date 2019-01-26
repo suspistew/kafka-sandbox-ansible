@@ -1,0 +1,7 @@
+- hosts: sandbox
+  roles:
+    - prepare
+    - zookeeper
+    - kafka-broker
+    - schema-registry
+    - kafka-connect

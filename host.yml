@@ -1,0 +1,12 @@
+all:
+  vars:
+    ansible_connection: ssh
+    ansible_ssh_user: fedora
+    ansible_become: true
+    security_mode: sasl_ssl
+sandbox:
+  hosts:
+    <server-ip>:
+      kafka:
+        broker:
+          id: 1

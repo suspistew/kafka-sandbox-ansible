@@ -1,0 +1,4 @@
+# Maintained by Ansible
+listeners=PLAINTEXT://:{{kafka.broker.config.port}}
+
+{% include './includes/base_server.properties.j2' %}

@@ -1,0 +1,34 @@
+- name: Install Java
+  yum:
+    name: "java-1.8.0-openjdk"
+    state: latest
+- name: Disable Require TTY in Sudoers (required for ansible synchronize)
+  lineinfile:
+    path: /etc/sudoers
+    state: absent
+    regexp: '^Defaults\s+requiretty.*$'
+- name: Add Confluent Dist Yum Repo
+  yum_repository:
+    name: Confluent.dist
+    file: confluent
+    description: "Confluent repository (dist)"
+    baseurl: "https://packages.confluent.io/rpm/5.1/7"
+    gpgcheck: "1"
+    gpgkey:  "https://packages.confluent.io/rpm/5.1/archive.key"
+    enabled: "1"
+  notify: yum-clean-all
+- name: Add Confluent Yum Repo
+  yum_repository:
+    name: Confluent
+    file: confluent
+    description: "Confluent repository"
+    baseurl: "https://packages.confluent.io/rpm/5.1"
+    gpgcheck: "1"
+    gpgkey: "https://packages.confluent.io/rpm/5.1/archive.key"
+    enabled: "1"
+  notify: yum-clean-all
+- meta: flush_handlers
+- name: Install the Confluent Platform
+  yum:
+    name: "confluent-platform-2.11"
+    state: latest
